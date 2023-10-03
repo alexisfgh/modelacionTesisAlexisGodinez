@@ -1,0 +1,108 @@
+#!/usr/bin/python3
+
+# Alexis Francisco Godínez Hernández
+# Rounge Kutta Order Four
+
+from matplotlib.pyplot import *
+from numpy import i0
+
+n1 = 0.20259936876328286
+e1 = 0.16945436485754548
+k = 14484.277536527565
+
+n2 = 0.9999999999927948
+e2 = 0.99954
+
+l = 0.000300
+
+def f1(t,x,y):
+    return n1*x*(1-(x+y)/k)-l*x*y-e1*x
+
+def f2(t,x,y):
+    return n2*y*(1-(x+y)/k)+l*x*y-e2*y
+
+def kutta(a,b,N,q1,q2):
+    x=[]
+    y=[]
+    
+    h=(b-a)/N
+    t=a
+    
+    w1=q1
+    w2=q2
+    
+    x+=[w1]
+    y+=[w2]
+    
+    for i in range(1,N+1):
+        k11=h*f1(t,w1,w2)
+        k12=h*f2(t,w1,w2)
+        
+        k21=h*f1(t+h/2,w1+k11/2,w2+k12/2)
+        k22=h*f2(t+h/2,w1+k11/2,w2+k12/2)
+        
+        k31=h*f1(t+h/2,w1+k21/2,w2+k22/2)
+        k32=h*f2(t+h/2,w1+k21/2,w2+k22/2)
+        
+        k41=h*f1(t+h,w1+k31,w2+k32)
+        k42=h*f2(t+h,w1+k31,w2+k32)
+        
+        w1=w1+(k11+ 2*k21 + 2*k31 + k41)/6
+        w2=w2+(k12+ 2*k22 + 2*k32 + k42)/6
+        
+        t=a+i*h
+        
+        x+=[w1]
+        y+=[w2]
+    
+    return x,y
+
+def equilibrio():
+    print('X0 = (0,0)')
+    print('X1 = (',(k/n1)*(n1-e1),',0)')
+    print('X2 = (0,',(k/n2)*(n2-e2),')')
+    print('X3 = (',(e2*n1-e1*n2+k*l*(e2-n2))/(l*(k*l+n1-n2)),',',(e1*n2-e2*n1+k*l*(n1-e1))/(l*(k*l+n1-n2)),')')
+
+
+if __name__=="__main__":
+    equilibrio()
+
+    inicio = 2020
+    finmedio = 2170
+    fin = 4000
+    n = 10000
+    cix = 2086
+    ciy = 123
+    
+    x,y=kutta(inicio,finmedio,int(n/2)-1,cix,ciy)
+    x2,y2=kutta(finmedio,fin,int(n/2),x[len(x)-1],y[len(y)-1])
+
+    plot(x,y)
+    plot(x2,y2,'c:')
+    
+    plot(0,0,'or')  #x0
+    plot((k/n1)*(n1-e1),0,'or')  #x1
+    plot(0,(k/n2)*(n2-e2),'or')  #x2
+    plot((e2*n1-e1*n2+k*l*(e2-n2))/(l*(k*l+n1-n2)),(e1*n2-e2*n1+k*l*(n1-e1))/(l*(k*l+n1-n2)),'or')  #x3
+    
+    text(0,-50,'$\mathbf{\overline{x}}_0$')
+    text((k/n1)*(n1-e1),0,'$\mathbf{\overline{x}}_1$')
+    text(-120,(k/n2)*(n2-e2),'$\mathbf{\overline{x}}_2$')
+    text((e2*n1-e1*n2+k*l*(e2-n2))/(l*(k*l+n1-n2)),(e1*n2-e2*n1+k*l*(n1-e1))/(l*(k*l+n1-n2)),'$\mathbf{\overline{x}}_3$')
+    
+    xlabel("Población $x$")
+    ylabel("Población $y$")
+    
+    savefig('simulacionYucuquimiNuevo.eps')
+    
+    show()
+    
+    t=np.linspace(inicio, fin, n+1)
+    plot(t,x+x2)
+    plot(t,y+y2,'r:')
+
+    xlabel("Año")
+    ylabel("Población")
+    legend(['$x$','$y$'])
+    savefig('simulacionxYucuquimiCondicionInicialNuevo.eps')
+    show()
