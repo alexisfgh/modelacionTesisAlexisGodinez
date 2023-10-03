@@ -9,7 +9,7 @@ Modelación matemática de la competencia del lenguaje: Un caso de estudio en el
 
 Tesis presentada en la Universidad Tecnológica de la Mixteca, el 25 de abril del 2022.
 
-<img src="./img/portada.png" width="310px"></img>
+<center><img src="./img/portada.png" width="510px"></img></center>
 
 Los programas en python solo emplean el método numérico Rongue Kutta de orden 4 para estimar la solución de un sistema de ecuaciones diferenciales utilizado en el trabajo de titulación.
 
@@ -17,4 +17,4 @@ Para mayor información consultar el trabajo de tesis en la biblioteca de la Uni
 
 Imagen ilustrativa de la simulación
 
-<img src="./img/simulacion.png" width="256px"></img>
+<img src="./img/simulacion.png" width="356px"></img>
