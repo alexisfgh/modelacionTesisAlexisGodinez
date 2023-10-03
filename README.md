@@ -3,7 +3,7 @@ Modelación matemática de la competencia del lenguaje un caso de estudio en el 
 
 ## Acerca de 
 
-Programa en python que se utilizaron en la tesis:
+Programas en python que se utilizaron en la tesis:
 
 Modelación matemática de la competencia del lenguaje: Un caso de estudio en el estado de Oaxaca.
 
